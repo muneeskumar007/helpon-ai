@@ -1,12 +1,13 @@
 
+
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { doc, getDoc } from 'firebase/firestore';
-import { db } from '../firebase';
-import FileList from '../components/FileList';
-import Chatbot from '../components/Chatbot';
-import BackButton from '../components/BackButton';
-import UploadManager from '../components/UploadManager';
+import { db } from '../../firebase';
+import FileList from '../FileList';
+import Chatbot from '../Chatbot';
+import BackButton from '../BackButton';
+import UploadManager from '../UploadManager';
 
 const DocumentViewer = () => {
   const { id } = useParams();
@@ -14,7 +15,7 @@ const DocumentViewer = () => {
 
   useEffect(() => {
     const fetchDoc = async () => {
-      const docRef = doc(db, 'documents', id);
+      const docRef = doc(db, 'documents', id);``
       const snap = await getDoc(docRef);
       if (snap.exists()) {
         setDocumentData({ id: snap.id, ...snap.data() });

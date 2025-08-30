@@ -1,1 +1,68 @@
 @import "tailwindcss";
+
+
+#tsparticles {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1; /* particles behind content */
+}
+
+/* .content {
+  position: relative;
+  z-index: 1;
+  color: white;
+  text-align: center;
+  margin-top: 100px;
+  font-family: Arial, sans-serif;
+}
+ */
+
+
+ /* Night sky animated gradient */
+/* .night-gradient {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(-45deg, #0f172a, #1e293b, #0f172a, #020617);
+  background-size: 400% 400%;
+  animation: gradientMove 15s ease infinite; */
+  /* z-index: -20; 
+  
+} */
+
+@keyframes gradientMove {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+
+/* Solid Navy Blue Background */
+.night-background {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: #0a192f; /* Navy Blue shade */
+  z-index: -20; /* behind particles */
+}
+
+/* Force navy background for whole app */
+/* body, html, #root {
+  height: 100%;
+  margin: 0;
+  background: #0a192f; 
+  color: white; 
+} */
