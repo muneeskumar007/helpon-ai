@@ -1,10 +1,19 @@
 
 import React from 'react'
+import Header from '../header/Header'
+import SidebarLayout from '../sidebar/Sidebar'
 
 function Dashboard() {
   return (
-    <div>Dashboard</div>
+    <>
+    <Header />
+    < SidebarLayout/>
+
+
+    
+    </>
   )
 }
 
 export default Dashboard
+

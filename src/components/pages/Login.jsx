@@ -200,6 +200,14 @@ import {
 } from "firebase/auth";
 import { doc, setDoc, getDoc } from "firebase/firestore";
 import { auth, db } from "../../firebase"; // adjust your path
+// for animaation background
+import Prism from '../../Backgrounds/Prism/Prism'
+import LightRays from '../../Backgrounds/LightRays/LightRays'
+import Silk from '../../Backgrounds/Silk/Silk'
+import Galaxy from '../../Backgrounds/Galaxy/Galaxy'
+// styles
+import '../../App.css'
+import './Login.css'
 
 export default function Authpage() {
   const [isSignup, setIsSignup] = useState(false);
@@ -282,9 +290,12 @@ export default function Authpage() {
       const res = await signInWithEmailAndPassword(auth, email, password);
       navigate("/dashboard");
     } catch (err) {
+      console.error("Login failed ❌", err.code, err.message);
       setError(getErrorMessage(err.code));
+      setErrorMsg("Invalid email or password. Please try again.");
     }
   };
+
 
   // 🔹 Google OAuth
   const handleGoogleLogin = async () => {
@@ -299,9 +310,20 @@ export default function Authpage() {
   };
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-gray-100">
-      <div className="w-full max-w-md rounded-2xl bg-white p-8 shadow-lg">
-        <h2 className="mb-6 text-center text-2xl font-bold text-gray-800">
+    <>
+   
+    <div className="container relative flex min-h-screen  items-center justify-center">
+   
+      
+     <div className="absolute ray inset-0 -z-10">
+      {/* <Galaxy/> */}
+      <LightRays/>
+      {/* <Prism /> */}
+      {/* <Silk/> */}
+  </div>
+
+      <div className="login w-full max-w-md rounded-2xl  bg-white/80  p-8 shadow-lg   ">
+        <h2 className="mb-6 text-center text-2xl  text-white font-bold ">
           {isSignup ? "Create Account" : "Welcome Back"}
         </h2>
 
@@ -319,7 +341,7 @@ export default function Authpage() {
               value={name}
               onChange={(e) => setName(e.target.value)}
               required
-              className="w-full rounded-lg border px-3 py-2"
+              className="w-full rounded-lg text-white border px-3 py-2"
             />
           )}
 
@@ -329,7 +351,7 @@ export default function Authpage() {
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             required
-            className="w-full rounded-lg border px-3 py-2"
+            className="w-full rounded-lg  text-white border px-3 py-2"
           />
 
           <input
@@ -338,7 +360,7 @@ export default function Authpage() {
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             required
-            className="w-full rounded-lg border px-3 py-2"
+            className="w-full rounded-lg  text-white border px-3 py-2"
           />
 
           <button
@@ -361,7 +383,7 @@ export default function Authpage() {
           Continue with Google
         </button>
 
-        <p className="mt-4 text-center text-sm text-gray-600">
+        <p className="mt-4 text-center  text-white text-sm ">
           {isSignup ? "Already have an account?" : "Don’t have an account?"}{" "}
           <button
             onClick={() => setIsSignup(!isSignup)}
@@ -371,6 +393,10 @@ export default function Authpage() {
           </button>
         </p>
       </div>
-    </div>
+      
+    </div> 
+    
+    
+    </>
   );
 }

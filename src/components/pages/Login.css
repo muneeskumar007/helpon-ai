@@ -1,0 +1,57 @@
+.login{
+    
+position: absolute;
+     margin:17px;
+     margin-right: 15px;
+     
+       background: rgba( 255, 255, 255, 0.10 );
+        backdrop-filter: blur(10px);
+      color: white;
+     border: 2px solid white;
+}
+
+.ray{
+  background-color: #0a0f2c;
+}
+
+
+input{
+  background: transparent;
+  border: none;
+  border-bottom: 2px solid white;
+  color: white;
+  /* font-size: 18px; */
+}
+
+@media screen and (max-width: 426px) {
+  
+  
+  
+
+    
+  
+  .login{
+    
+   /* position: absolute; 
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%; */
+     position: absolute;
+     /* margin:17px; */
+     margin-right: 5px;
+     margin-left: 10px;
+     
+       background: rgba( 255, 255, 255, 0.10 );
+        backdrop-filter: blur(10px);
+      color: white;
+     border: 2px solid white;
+      /* width: 100%; */
+      /* opacity: 60%; */
+     
+       
+       
+    
+  }
+
+}

@@ -1,0 +1,147 @@
+
+.pro-sidebar {
+  height: 100vh;
+  background: #1e1e2f;
+  color: white;
+}
+
+.pro-menu-item {
+  padding: 12px;
+  cursor: pointer;
+}
+
+.pro-menu-item:hover {
+  background: #33334d;
+}
+
+/* Sidebar container */
+.pro-sidebar {
+  height: 100vh;
+  background: #1e1e2f; /* dark navy */
+  color: #fff;
+  font-family: "Segoe UI", sans-serif;
+  transition: all 0.3s ease;
+  border-right: 1px solid #2a2a40;
+}
+
+/* Menu items */
+.pro-menu-item {
+  padding: 12px 16px;
+  font-size: 15px;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s;
+}
+
+/* Hover effect */
+.pro-menu-item:hover {
+  background: #33334d;
+  color: #00d4ff; /* cyan highlight */
+}
+
+/* Active state */
+.pro-menu-item.active {
+  background: #252542;
+  border-left: 4px solid #00d4ff;
+  color: #00d4ff;
+}
+
+/* Icon styling */
+.pro-icon-wrapper {
+  margin-right: 10px;
+}
+/* .pro-sidebar {
+  height: 100vh;
+  background: #1e1e2f;
+  color: #fff;
+  font-family: "Segoe UI", sans-serif;
+  transition: all 0.3s ease;
+  border-right: 1px solid #2a2a40;
+  z-index: 1000;
+  position: relative;
+} */
+ .pro-sidebar {
+  height: 100vh;
+  background: #1e1e2f;
+  color: #fff;
+  font-family: "Segoe UI", sans-serif;
+  border-right: 1px solid #2a2a40;
+}
+
+/* Menu items */
+.pro-menu-item {
+  padding: 12px 16px;
+  font-size: 15px;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s;
+}
+
+.pro-menu-item:hover {
+  background: #33334d;
+  color: #00d4ff;
+}
+
+.pro-menu-item.active {
+  background: #252542;
+  border-left: 4px solid #00d4ff;
+  color: #00d4ff;
+}
+
+ /* Sidebar container with animation  */
+.sidebar-container {
+  transition: transform 0.3s ease-in-out;
+}
+
+.sidebar-container.closed {
+  transform: translateX(-100%);
+}
+
+.sidebar-container.open {
+  transform: translateX(0);
+}
+
+
+/* Toggle button (mobile) */
+/* .toggle-btn {
+  position: absolute;
+  top: 15px;
+  left: 15px;
+  z-index: 2000;
+  background: #1e1e2f;
+  border: none;
+  color: white;
+  padding: 8px 10px;
+  border-radius: 6px;
+  cursor: pointer;
+} */
+
+/* Toggle button */
+.toggle-btn {
+  position: fixed;
+  top: 15px;
+  left: 15px;
+  z-index: 2000;
+  background: #1e1e2f;
+  border: none;
+  color: white;
+  padding: 6px 10px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 18px;
+}
+/* Mobile responsiveness */
+
+
+@media (max-width: 768px) {
+  .sidebar-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100%;
+    z-index: 1500;
+  }
+
+  main {
+    margin-left: 0 !important;
+    width: 100%;
+  }
+}

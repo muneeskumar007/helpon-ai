@@ -39,7 +39,9 @@ function Nav() {
   return (
     <>
       <div>
-        {!isOpen && (
+        {/* for burger menu */}
+        
+        {/* {!isOpen && (
           <div
             onClick={burger}
             className=" text-white  cursor-pointer md:hidden"
@@ -55,10 +57,11 @@ function Nav() {
           >
             <IoClose size={30} />
           </div>
-        )}
+        )} */}
 
         {isOpen ? (
           <div className=" bg-gray-900 overflow-y-hidden fixed z-0 top-13 left-0 w-screen min-h-screen flex justify-center items-center flex-col gap-10 duration-300 ease-in">
+           
             {/* <a href="#">home</a>
       <a href="#">about</a>
       <a href="#">contact</a> */}

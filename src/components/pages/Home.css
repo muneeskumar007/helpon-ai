@@ -1,1 +1,39 @@
 
+@media screen and (max-width: 426px) {
+  
+  .head{
+    font-size: 1.8rem;
+  }
+
+  .home-container p {
+    font-size: 0.9rem;
+  }
+
+  .home-container button {
+    /* width: 100%; */
+    padding: 6px;
+    font-size: 1rem;
+  }
+    
+}
+
+@media screen and (min-width: 427px) and (max-width: 768px) {
+  .home-container {
+    padding: 20px;
+  }
+
+  .home-container h1 {
+    font-size: 2.5rem;
+  }
+
+  .home-container p {
+    font-size: 1rem;
+  }
+
+  .home-container button {
+    width: 100%;
+    padding: 12px;
+    font-size: 1rem;
+  }
+    
+}
