@@ -8,6 +8,7 @@ import Login from './components/pages/Login';
 
 import Dashboard from './components/pages/Dashboard';
 
+
 export default function App() {
   
 
@@ -19,6 +20,7 @@ export default function App() {
 
   return (
     <>
+     
       <Routes>
         <Route path="/" element={<Home />} />
 
@@ -29,7 +31,10 @@ export default function App() {
 />
 
 
-        <Route path="/dashboard" element={user ? <Dashboard /> : <Navigate to="/login"  /> } />
+      
+   
+        <Route path="/dashboard/*" element={user ? <Dashboard /> : <Navigate to="/login"  /> } />
+
         <Route path="/document/:id" element={<DocumentViewer /> } />
       
         
@@ -37,6 +42,7 @@ export default function App() {
         <Route path="*" element={<Navigate to="/" />} />
       
       </Routes>
+      
     </>
   );
 }
