@@ -591,7 +591,7 @@ export default function SidebarLayout({ children }) {
       >
         <Sidebar backgroundColor="#1e293b" className="h-full">
           <div className="flex items-center justify-between p-4 border-b border-gray-700 text-white">
-            <h1 className="text-lg font-bold">My App</h1>
+           
             {/* Close button for mobile */}
             <button className="md:hidden" onClick={() => setMobileOpen(false)}>
               <FaTimes />
@@ -627,11 +627,11 @@ export default function SidebarLayout({ children }) {
 
             <MenuItem
               icon={<FaFileAlt />}
-              component={<Link to="/dashboard/bonafide" />}
-              active={location.pathname.includes("bonafide")}
+              component={<Link to="/dashboard/chat" />}
+              active={location.pathname.includes("chat")}
               onClick={() => setMobileOpen(false)}
             >
-              Bonafide
+              Chat
             </MenuItem>
 
             <MenuItem
@@ -655,12 +655,15 @@ export default function SidebarLayout({ children }) {
             {/* Profile with popup */}
             <MenuItem
               icon={<FaUserCircle />}
-              active={profileOpen}
-              onClick={() => setProfileOpen(!profileOpen)}
+              component={<Link to="/dashboard/profile" />}
+              // active={profileOpen}
+              active={location.pathname.includes("profile")}
+              // onClick={() => setProfileOpen(!profileOpen)}
+              onClick={() => setMobileOpen(false)}
             >
               Profile
             </MenuItem>
-            {profileOpen && (
+            {/* {profileOpen && (
               <div className="ml-10 mt-2 bg-gray-800 p-2 rounded-lg shadow-lg text-sm">
                 <button
                   className="flex items-center gap-2 text-red-400 hover:text-red-300"
@@ -669,7 +672,7 @@ export default function SidebarLayout({ children }) {
                   <FaSignOutAlt /> Logout
                 </button>
               </div>
-            )}
+            )} */}
           </Menu>
         </Sidebar>
       </div>

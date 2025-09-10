@@ -1,14 +1,15 @@
 
 import React from 'react'
-import Header from '../header/Header'
-import SidebarLayout from '../sidebar/Sidebar'
 import { Routes, Route } from "react-router-dom";
 
+
+import Header from '../header/Header'
+import SidebarLayout from '../sidebar/Sidebar'
 import Course from "./Course";
 import Chatbot from "../Chatbot";
-import Bonafide from "./Bonafide";
+import Chat from "./Chat";
 import Admin from "./Admin";
-// import Founder from "./components/Founder";
+import Profile from "./Profile";
 
 
 function Dashboard() {
@@ -19,9 +20,9 @@ function Dashboard() {
       <Routes>
         <Route path="/course" element={<Course />} />
         <Route path="/chatbot" element={<Chatbot />} />
-        <Route path="/bonafide" element={<Bonafide />} />
+        <Route path="/chat" element={<Chat />} />
         <Route path="/admin" element={<Admin />} />
-        {/* <Route path="founder" element={<Founder />} /> */}
+        <Route path="/profile" element={<Profile />} />
         {/* <Route path="*" element={<Course />} />  */}
       </Routes>
     </SidebarLayout>

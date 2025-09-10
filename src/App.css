@@ -1,6 +1,13 @@
 @import "tailwindcss";
 
-
+.md\:ml-64 { /* the element was main.flex-1.overflow-y-auto.md\:ml-64 */
+  margin-left: 0px;
+  margin: 0px;
+  padding: 0px;
+}
+.p-4 {
+    padding: 0px;
+}
 #tsparticles {
   position: fixed;
   top: 0;
