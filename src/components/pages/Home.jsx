@@ -7,7 +7,7 @@ import './Home.css'
 
 // animations
 import  SplitText from "../../TextAnimations/SplitText/SplitText";
-import ShinyText from "../../TextAnimations/ShinyText/ShinyText";
+// import ShinyText from "../../TextAnimations/ShinyText/ShinyText";
 import AnimatedContent from "../../Animations/AnimatedContent/AnimatedContent";
 
 
