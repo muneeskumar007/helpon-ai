@@ -17,43 +17,43 @@ import { generateGeminiReply } from "../geminiApi"; // Adjust path as needed
 
 
 
-const knowledgeBase = {
-  // Greetings
-  "hello": "👋 Hey! How can I help you today?",
-  "hlo": "👋 Hey! How can I help you today?",
-  "hi": "Hi there! 😊 What do you want to know?",
-  "hey": "Hello 👋, need help with login or files?",
-  "bye": "Goodbye! 👋 Have a wonderful day!",
+// const knowledgeBase = {
+//   // Greetings
+//   "hello": "👋 Hey! How can I help you today?",
+//   "hlo": "👋 Hey! How can I help you today?",
+//   "hi": "Hi there! 😊 What do you want to know?",
+//   "hey": "Hello 👋, need help with login or files?",
+//   "bye": "Goodbye! 👋 Have a wonderful day!",
 
-  // Auth
-  "login": "🔑 To login, use your email & password on the login page.",
-  "signup": "📝 Go to Sign Up and provide email, password & name.",
-  "logout": "🚪 Click the logout button in the top right to sign out.",
-  "password reset": "🔒 Forgot your password? Use the reset option on login.",
+//   // Auth
+//   "login": "🔑 To login, use your email & password on the login page.",
+//   "signup": "📝 Go to Sign Up and provide email, password & name.",
+//   "logout": "🚪 Click the logout button in the top right to sign out.",
+//   "password reset": "🔒 Forgot your password? Use the reset option on login.",
 
-  // Files & Upload
-  "upload": "📤 Use Upload Manager in your dashboard to upload documents.",
-  "view files": "📂 Open Home or Document Viewer to see uploaded files.",
-  "delete file": "🗑️ In File List, click delete on the file you want removed.",
-  "pdf": "📑 PDFs can be uploaded and previewed in the viewer.",
-  "images": "🖼️ Supported formats: JPG, PNG, GIF. Upload via Upload Manager.",
+//   // Files & Upload
+//   "upload": "📤 Use Upload Manager in your dashboard to upload documents.",
+//   "view files": "📂 Open Home or Document Viewer to see uploaded files.",
+//   "delete file": "🗑️ In File List, click delete on the file you want removed.",
+//   "pdf": "📑 PDFs can be uploaded and previewed in the viewer.",
+//   "images": "🖼️ Supported formats: JPG, PNG, GIF. Upload via Upload Manager.",
 
-  // Profile
-  "profile": "👤 You can edit your profile in the Profile section.",
-  "update details": "✏️ Go to Profile > Edit to update your details.",
-  "change password": "🔐 From Profile settings, you can change your password.",
+//   // Profile
+//   "profile": "👤 You can edit your profile in the Profile section.",
+//   "update details": "✏️ Go to Profile > Edit to update your details.",
+//   "change password": "🔐 From Profile settings, you can change your password.",
 
-  // Search & Navigation
-  "search": "🔍 Use the search bar to find your documents.",
-  "back": "⬅️ Use the back arrow (top left) to return to the menu.",
-  "home": "🏠 Home shows all categories & cards.",
-  "dashboard": "📊 Dashboard gives you access to uploads, profile, and files.",
+//   // Search & Navigation
+//   "search": "🔍 Use the search bar to find your documents.",
+//   "back": "⬅️ Use the back arrow (top left) to return to the menu.",
+//   "home": "🏠 Home shows all categories & cards.",
+//   "dashboard": "📊 Dashboard gives you access to uploads, profile, and files.",
 
-  // Support
-  "help": "🤝 I can help with login, signup, upload, profile, or file viewing.",
-  "contact": "📧 Reach out to support@example.com for extra help.",
-  "error": "⚠️ If you see an error, refresh or try logging in again.",
-};
+//   // Support
+//   "help": "🤝 I can help with login, signup, upload, profile, or file viewing.",
+//   "contact": "📧 Reach out to support@example.com for extra help.",
+//   "error": "⚠️ If you see an error, refresh or try logging in again.",
+// };
 
 
 
@@ -127,62 +127,7 @@ export default function Chatbot() {
     setLoading(false);
   };
 
-  // // ✅ Load chat messages for logged-in student
-  // useEffect(() => {
-  //   if (!userId) return;
-
-  //   const q = query(
-  //     collection(db, `chats/${userId}/messages`),   // 🔥 use userId path
-  //     orderBy("createdAt")
-  //   );
-
-  //   const unsub = onSnapshot(q, (snap) => {
-  //     setMessages(snap.docs.map((d) => ({ id: d.id, ...d.data() })));
-  //     requestAnimationFrame(() => {
-  //       if (listRef.current) {
-  //         listRef.current.scrollTop = listRef.current.scrollHeight;
-  //       }
-  //     });
-  //   });
-
-  //   return () => unsub();
-  // }, [userId]);
-
-  // // const sendMessage = async () => {
-  //   if (!input.trim() || !userId) return;  // 🔥 block if not logged in
-  //   const text = input;
-  //   setInput("");
-  //   setLoading(true);
-
-  //   try {
-  //     // user message
-  //     await addDoc(collection(db, `chats/${userId}/messages`), {  // 🔥 userId
-  //       sender: "user",
-  //       text,
-  //       createdAt: serverTimestamp(),
-  //     });
-
-  //     // bot reply
-  //     const reply = getBotReply(text);
-  //     await addDoc(collection(db, `chats/${userId}/messages`), {  // 🔥 userId
-  //       sender: "bot",
-  //       text: reply,
-  //       createdAt: serverTimestamp(),
-  //     });
-  //   } catch (err) {
-  //     console.error("Chatbot error:", err);
-  //   } finally {
-  //     setLoading(false);
-  //   }
-  // };
-
-  // if (!userId) {
-  //   return (
-  //     <div className="h-screen flex items-center justify-center bg-gray-900 text-white">
-  //       <p>⚠️ Please login to use HelpBot</p>
-  //     </div>
-  //   );
-  // }
+  
 
   if (!userId) {
     return (
@@ -193,11 +138,11 @@ export default function Chatbot() {
   }
 
   return (
-    <div className="h-screen flex flex-col bg-gray-900 text-white">
+    <div className=" h-dvh overflow-hidden no-scrollbar flex flex-col  bg-gray-900 text-white">
       {/* Header */}
-      <div className="p-4 border-b border-gray-700 bg-gray-800 shadow-md">
+      {/* <div className="p-4 border-b border-gray-700 bg-gray-800 shadow-md">
         <h2 className="text-lg font-semibold text-blue-400">💬 HelpBot</h2>
-      </div>
+      </div> */}
 
       {/* Messages */}
       <div ref={listRef} className="flex-1 overflow-y-auto p-4 space-y-3 bg-gray-900">

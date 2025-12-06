@@ -21,7 +21,7 @@ function Dashboard() {
         <Route path="/course" element={<Course />} />
         <Route path="/chatbot" element={<Chatbot />} />
         <Route path="/chat" element={<Chat />} />
-        <Route path="/admin" element={user ? <Admin /> : <Navigate to="/login" replace />} />
+        <Route path="/admin" element={<Admin /> } />
         <Route path="/profile" element={<Profile />} />
         {/* <Route path="*" element={<Course />} />  */}
       </Routes>

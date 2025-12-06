@@ -15,7 +15,7 @@ const firebaseConfig = {
   apiKey: "AIzaSyBWNk-GTq2OXRN95-gYehMP2OQfpz6dFlo",
   authDomain: "quize-7f983.firebaseapp.com",
   projectId: "quize-7f983",
-  storageBucket: "quize-7f983.firebasestorage.app",
+  storageBucket: "quize-7f983.firebasestorage.appspot.com",
   messagingSenderId: "1089648503737",
   appId: "1:1089648503737:web:6f931807ce55f8192b2468",
   measurementId: "G-9M57FGC3H8"

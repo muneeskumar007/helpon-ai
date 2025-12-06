@@ -129,7 +129,7 @@ export default function SidebarLayout({ children }) {
       {/* Main content */}
       <main className="flex-1 overflow-y-auto md:ml-64">
         {/* Mobile top bar with hamburger */}
-        <div className="p-4 bg-white shadow md:hidden">
+        <div className="p-4 inline bg-white shadow md:hidden">
           <button onClick={() => setMobileOpen(true)}>
             <FaBars size={20} />
           </button>

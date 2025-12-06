@@ -140,6 +140,7 @@
 
 
 
+
 import { useState, useEffect } from "react";
 import {
   collection,
@@ -151,6 +152,9 @@ import {
 } from "firebase/firestore";
 import { auth, db } from "../../firebase";
 
+import { uploadToCloudinary } from "../../utils/uploadToCloudinary";
+import { deleteFromCloudinary } from "../../utils/deleteFromCloudinary";
+
 export default function CourseForm({ courseId, onSuccess }) {
   const [form, setForm] = useState({
     name: "",
@@ -159,12 +163,14 @@ export default function CourseForm({ courseId, onSuccess }) {
     year: "",
     section: "",
     adviser: "",
-    imageUrl: "",
-    pdfUrl: "",
+    images: [],
+    pdfs: [],
   });
-  const [staff, setStaff] = useState(null);
 
-  // ✅ fetch staff profile (auto-fill department & section)
+  const [staff, setStaff] = useState(null);
+  const [uploading, setUploading] = useState(false);
+
+  // Load staff
   useEffect(() => {
     const fetchStaff = async () => {
       const user = auth.currentUser;
@@ -180,11 +186,10 @@ export default function CourseForm({ courseId, onSuccess }) {
         }));
       }
     };
-
     fetchStaff();
   }, []);
 
-  // ✅ if editing a course, load details
+  // Load existing course for editing
   useEffect(() => {
     const fetchCourse = async () => {
       if (!courseId) return;
@@ -196,52 +201,70 @@ export default function CourseForm({ courseId, onSuccess }) {
     fetchCourse();
   }, [courseId]);
 
-  const handleChange = (e) => {
+  const handleChange = (e) =>
     setForm({ ...form, [e.target.name]: e.target.value });
+
+  // Upload Image
+  const handleImageUpload = async (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+
+    setUploading(true);
+    const result = await uploadToCloudinary(file, "image");
+    setForm((prev) => ({ ...prev, images: [...prev.images, result] }));
+    setUploading(false);
   };
 
+  // Upload PDF
+  const handlePdfUpload = async (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+
+    setUploading(true);
+    const result = await uploadToCloudinary(file, "pdf");
+    setForm((prev) => ({ ...prev, pdfs: [...prev.pdfs, result] }));
+    setUploading(false);
+  };
+
+  // Delete image/PDF before saving
+  const removeItem = async (publicId, type) => {
+    if (window.confirm("Delete this file?")) {
+      await deleteFromCloudinary(publicId);
+      setForm((prev) => ({
+        ...prev,
+        [type]: prev[type].filter((f) => f.public_id !== publicId),
+      }));
+    }
+  };
+
+  // Save course
   const handleSubmit = async (e) => {
     e.preventDefault();
+
     try {
       if (courseId) {
-        // ✅ update existing course
         await updateDoc(doc(db, "courses", courseId), {
           ...form,
           updatedAt: Timestamp.now(),
         });
-        alert("✅ Course updated successfully!");
+        alert("Course updated!");
       } else {
-        // ✅ add new course
         await addDoc(collection(db, "courses"), {
           ...form,
           createdAt: Timestamp.now(),
         });
-        alert("✅ Course added successfully!");
+        alert("Course added!");
       }
 
-      setForm({
-        name: "",
-        description: "",
-        department: staff?.department || "",
-        year: "",
-        section: staff?.section || "",
-        adviser: "",
-        imageUrl: "",
-        pdfUrl: "",
-      });
-
-      if (onSuccess) onSuccess(); // refresh course list
+      onSuccess && onSuccess();
     } catch (err) {
-      console.error("Error saving course:", err);
+      console.error(err);
     }
   };
 
   return (
-    <form
-      onSubmit={handleSubmit}
-      className="bg-white shadow rounded-lg p-4 mb-6 space-y-3"
-    >
-      <h3 className="text-lg font-bold mb-2">
+    <form onSubmit={handleSubmit} className="bg-white shadow p-4 rounded-lg">
+      <h3 className="text-lg font-bold mb-3">
         {courseId ? "Edit Course" : "Add New Course"}
       </h3>
 
@@ -251,26 +274,19 @@ export default function CourseForm({ courseId, onSuccess }) {
         placeholder="Course Name"
         value={form.name}
         onChange={handleChange}
-        className="w-full border rounded px-3 py-2"
-        required
+        className="w-full border rounded px-3 py-2 mb-3"
       />
 
       <textarea
         name="description"
-        placeholder="Course Description"
+        placeholder="Description"
         value={form.description}
         onChange={handleChange}
-        className="w-full border rounded px-3 py-2"
+        className="w-full border rounded px-3 py-2 mb-3"
       />
 
-      <div className="grid grid-cols-2 gap-2">
-        <input
-          type="text"
-          name="department"
-          value={form.department}
-          disabled
-          className="border rounded px-3 py-2 bg-gray-100"
-        />
+      {/* YEAR + ADVISER */}
+      <div className="grid grid-cols-2 gap-2 mb-3">
         <input
           type="text"
           name="year"
@@ -278,51 +294,73 @@ export default function CourseForm({ courseId, onSuccess }) {
           value={form.year}
           onChange={handleChange}
           className="border rounded px-3 py-2"
-          required
-        />
-      </div>
-
-      <div className="grid grid-cols-2 gap-2">
-        <input
-          type="text"
-          name="section"
-          value={form.section}
-          disabled
-          className="border rounded px-3 py-2 bg-gray-100"
         />
         <input
           type="text"
           name="adviser"
-          placeholder="Class Adviser"
+          placeholder="Adviser"
           value={form.adviser}
           onChange={handleChange}
           className="border rounded px-3 py-2"
         />
       </div>
 
+      {/* IMAGE UPLOAD */}
+      <label className="font-semibold">Upload Images:</label>
       <input
-        type="text"
-        name="imageUrl"
-        placeholder="Course Image (Google Drive/Dropbox link)"
-        value={form.imageUrl}
-        onChange={handleChange}
-        className="w-full border rounded px-3 py-2"
+        type="file"
+        accept="image/*"
+        onChange={handleImageUpload}
+        className="w-full mb-3"
       />
 
+      {form.images.length > 0 && (
+        <div className="grid grid-cols-3 gap-3 mb-4">
+          {form.images.map((img) => (
+            <div key={img.public_id} className="relative">
+              <img
+                src={img.url}
+                className="h-24 w-full object-cover rounded"
+              />
+              <button
+                type="button"
+                onClick={() => removeItem(img.public_id, "images")}
+                className="absolute top-1 right-1 bg-red-600 text-white p-1 rounded-full"
+              >
+                ✕
+              </button>
+            </div>
+          ))}
+        </div>
+      )}
+
+      {/* PDF UPLOAD */}
+      <label className="font-semibold">Upload PDFs:</label>
       <input
-        type="text"
-        name="pdfUrl"
-        placeholder="PDF Link"
-        value={form.pdfUrl}
-        onChange={handleChange}
-        className="w-full border rounded px-3 py-2"
+        type="file"
+        accept="application/pdf"
+        onChange={handlePdfUpload}
+        className="w-full mb-3"
       />
 
-      <button
-        type="submit"
-        className="w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700"
-      >
-        {courseId ? "Update Course" : "Save Course"}
+      {form.pdfs.map((pdf) => (
+        <div
+          key={pdf.public_id}
+          className="flex justify-between items-center bg-gray-100 p-2 mb-2 rounded"
+        >
+          <span>{pdf.name}</span>
+          <button
+            type="button"
+            onClick={() => removeItem(pdf.public_id, "pdfs")}
+            className="bg-red-600 text-white px-2 py-1 rounded"
+          >
+            Delete
+          </button>
+        </div>
+      ))}
+
+      <button className="w-full bg-blue-600 text-white py-2 rounded">
+        {uploading ? "Uploading..." : courseId ? "Update Course" : "Save Course"}
       </button>
     </form>
   );

@@ -1,0 +1,39 @@
+
+.key{
+    
+position: absolute;
+     margin:17px;
+     margin-right: 15px;
+     
+       background: rgba( 255, 255, 255, 0.10 );
+        backdrop-filter: blur(10px);
+      color: white;
+     border: 2px solid white;
+}
+
+.input{
+    /* background-color: blueviolet; */
+    color:blue;
+    font-size: large;
+    border: 2px solid darkblue;
+    
+}
+.input:focus{
+    background-color: blueviolet;
+    color: white;
+    
+    
+}
+
+.file:focus{
+    background-color: blueviolet;
+    color: white;
+
+}
+
+.file{
+    color: gray;
+     font-size: large;
+    border: 2px solid darkblue;
+    
+}

@@ -7,6 +7,7 @@ import Home from "./components/pages/Home";
 import DocumentViewer from "./components/pages/DocumentViewer";
 import Login from "./components/pages/Login";
 import Dashboard from "./components/pages/Dashboard";
+import CourseList from "./components/pages/CourseList";
 
 export default function App() {
   const [user, loading] = useAuthState(auth);
@@ -29,9 +30,10 @@ export default function App() {
       />
 
       <Route path="/document/:id" element={<DocumentViewer />} />
+      <Route path="/course/:id" element={<CourseList />} />
 
       {/* Catch-all redirect */}
-      <Route path="*" element={<Navigate to="/" replace />} />
+      {/* <Route path="*" element={<Navigate to="/" replace />} /> */}
     </Routes>
   );
 }
