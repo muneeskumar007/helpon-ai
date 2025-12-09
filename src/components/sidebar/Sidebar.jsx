@@ -14,6 +14,8 @@ import {
   FaSignOutAlt,
 } from "react-icons/fa";
 
+import Header from "../header/Header";
+
 export default function SidebarLayout({ children }) {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [profileOpen, setProfileOpen] = useState(false);
@@ -21,10 +23,11 @@ export default function SidebarLayout({ children }) {
 
   return (
     <div className="flex h-screen bg-gray-100 relative overflow-hidden">
-      {/* Overlay for mobile when sidebar is open */}
+      
+      {/* Overlay */}
       {mobileOpen && (
         <div
-          className="fixed inset-0 bg-black bg-opacity-50 z-40 md:hidden"
+          className="fixed inset-0  bg-gray-900 bg-opacity-50 z-40 md:hidden"
           onClick={() => setMobileOpen(false)}
         />
       )}
@@ -34,18 +37,12 @@ export default function SidebarLayout({ children }) {
         className={`
           fixed md:static top-0 left-0 h-full z-50 
           transition-transform duration-300 ease-in-out
-          ${mobileOpen ? "translate-x-0" : "-translate-x-full md:translate-x-0"}
+          ${mobileOpen ? "translate-x-0 mt-10" : "-translate-x-full md:translate-x-0"}
           w-64
         `}
       >
         <Sidebar backgroundColor="#1e293b" className="h-full">
-          <div className="flex items-center justify-between p-4 border-b border-gray-700 text-white">
-           
-            {/* Close button for mobile */}
-            <button className="md:hidden" onClick={() => setMobileOpen(false)}>
-              <FaTimes />
-            </button>
-          </div>
+         
 
           <Menu
             menuItemStyles={{
@@ -92,14 +89,14 @@ export default function SidebarLayout({ children }) {
               Admin
             </MenuItem>
 
-            <MenuItem
+            {/* <MenuItem
               icon={<FaCrown />}
               component={<Link to="/dashboard/founder" />}
               active={location.pathname.includes("founder")}
               onClick={() => setMobileOpen(false)}
             >
               Founder
-            </MenuItem>
+            </MenuItem> */}
 
             {/* Profile with popup */}
             <MenuItem
@@ -112,28 +109,20 @@ export default function SidebarLayout({ children }) {
             >
               Profile
             </MenuItem>
-            {/* {profileOpen && (
-              <div className="ml-10 mt-2 bg-gray-800 p-2 rounded-lg shadow-lg text-sm">
-                <button
-                  className="flex items-center gap-2 text-red-400 hover:text-red-300"
-                  onClick={() => alert("Logged out")}
-                >
-                  <FaSignOutAlt /> Logout
-                </button>
-              </div>
-            )} */}
+           
           </Menu>
         </Sidebar>
       </div>
 
-      {/* Main content */}
+      
       <main className="flex-1 overflow-y-auto md:ml-64">
-        {/* Mobile top bar with hamburger */}
-        <div className="p-4 inline bg-white shadow md:hidden">
-          <button onClick={() => setMobileOpen(true)}>
-            <FaBars size={20} />
-          </button>
-        </div>
+
+        
+        {/* <Header setMobileOpen={setMobileOpen} /> */}
+        <Header mobileOpen={mobileOpen} setMobileOpen={setMobileOpen} />
+
+
+        {/* Page content */}
         <div className="p-4">{children}</div>
       </main>
     </div>

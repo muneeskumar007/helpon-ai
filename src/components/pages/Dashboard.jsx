@@ -2,8 +2,6 @@
 import React from 'react'
 import { Routes, Route, Navigate } from "react-router-dom";
 
-
-import Header from '../header/Header'
 import SidebarLayout from '../sidebar/Sidebar'
 import Course from "./Course";
 import Chatbot from "../Chatbot";
@@ -15,7 +13,7 @@ import Profile from "./Profile";
 function Dashboard() {
   return (
     <>
-    <Header />
+    
     <SidebarLayout>
       <Routes>
         <Route path="/course" element={<Course />} />
@@ -23,12 +21,10 @@ function Dashboard() {
         <Route path="/chat" element={<Chat />} />
         <Route path="/admin" element={<Admin /> } />
         <Route path="/profile" element={<Profile />} />
-        {/* <Route path="*" element={<Course />} />  */}
+        
       </Routes>
     </SidebarLayout>
-
-
-    
+      
     </>
   )
 }
