@@ -108,7 +108,28 @@ const saveStudent = async (user, extraName = null) => {
     } catch (err) {
       setError(err.message);
     }
+    await saveStudentIfNotExists(user);
+
   };
+
+  const saveStudentIfNotExists = async (user) => {
+  const ref = doc(db, "students", user.uid);
+  const snap = await getDoc(ref);
+
+  if (!snap.exists()) {
+    await setDoc(ref, {
+      name: user.displayName || "Student",
+      email: user.email,
+      department: "",
+      year: "",
+      section: "",
+      role: "student",
+      createdAt: new Date(),
+    });
+  }
+};
+
+// 
 
 
   return (

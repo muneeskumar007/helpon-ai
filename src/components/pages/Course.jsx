@@ -480,176 +480,358 @@
 
 
 
+// // src/components/pages/Course.jsx
+// import { useEffect, useState } from "react";
+// import { collection, onSnapshot } from "firebase/firestore";
+// import { doc, getDoc } from "firebase/firestore";
+
+
+// import { auth, db } from "../../firebase";
+// import { ThreeDot } from "react-loading-indicators";
+
+// export default function Course() {
+//   const [courses, setCourses] = useState([]);
+
+//   useEffect(() => {
+//     const unsub = onSnapshot(collection(db, "courses"), (snapshot) => {
+//       const list = snapshot.docs.map((doc) => ({
+//         id: doc.id,
+//         ...doc.data(),
+//       }));
+
+//       setCourses(list);
+//     });
+
+//     return () => unsub();
+//   }, []);
+
+
+
+//   const [student, setStudent] = useState(null);
+//   const [studentLoading, setStudentLoading] = useState(true);
+  
+  
+//   // ✅ Load logged-in student
+//   useEffect(() => {
+//     const user = auth.currentUser;
+
+//     if (!user) {
+//       setStudent(null);
+//       setStudentLoading(false);
+//       return;
+//     }
+
+//     setStudent(user); // no need to fetch dept/section now
+//     setStudentLoading(false);
+//   }, []);
+
+//   // ✅ Load ALL courses (no filters)
+//   useEffect(() => {
+//     const unsub = onSnapshot(collection(db, "courses"), (snapshot) => {
+//       const list = snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
+//       setCourses(list);
+//     });
+
+//     return () => unsub();
+//   }, []);
+
+
+
+//   useEffect(() => {
+//   const loadStudent = async () => {
+//     const user = auth.currentUser;
+
+//     if (!user) {
+//       setStudent(null);
+//       setStudentLoading(false);
+//       return;
+//     }
+
+//     // 🔥 Fetch student document from Firestore
+//     const ref = doc(db, "students", user.uid);
+//     const snap = await getDoc(ref);
+
+//     if (snap.exists()) {
+//       setStudent(snap.data());
+//     } else {
+//       console.warn("⚠ No student data found for user");
+//       setStudent({});
+//     }
+
+//     setStudentLoading(false);
+//   };
+
+//   loadStudent();
+// }, []);
+
+
+//   // Loading state
+//   if (studentLoading) {
+//     return (
+//       <p className="text-center p-6">
+//         <ThreeDot
+//           variant="pulsate"
+//           color="#1f13a4"
+//           size="large"
+//           text="⏳ Loading"
+//           textColor="#172d68"
+//         />
+//       </p>
+//     );
+//   }
+
+
+//   return (
+//     <div className="p-6">
+      
+//        <div className="mb-6 bg-white shadow rounded-lg p-4">
+//        <h2 className="text-xl pt-4 ml-3 font-bold">Hello {student.name} 👋</h2>
+//           <p className="text-gray-600 ml-3 mt-2">
+//             Dept: <strong className="mr-6 ">{student.department}</strong> | Year: <strong className="mr-6 ">{student.year}</strong> | Section: <strong className="mr-3 ">{student.section}</strong>
+//           </p>
+//           <p className="text-gray-500 mt-3 pb-4 ml-3">
+//             Class Adviser: <strong>A.XAVIER MARY</strong>
+//           </p>
+//            <p className="text-gray-600 ml-3 mt-2">
+//            Welcome to your course materials 📚
+//          </p>
+//        </div>
+
+//         {/* <h3 className="text-2xl font-semibold mb-4">Available Materials 📚</h3> */}
+//         <h2 className="text-2xl font-bold mb-4">Available Materials 📚</h2>
+
+//       {courses.length === 0 && (
+//         <p className="text-gray-400 text-xl">No materials 📚 available</p>
+//       )}
+
+//       <div className="grid md:grid-cols-2 gap-6">
+//         {courses.map((course) => (
+//           <div key={course.id} className="bg-white p-4 rounded-xl shadow-md">
+
+//             <h3 className="text-xl font-bold mt-1 ml-3">{course.name}</h3>
+//             <p className="text-gray-700 ml-8">{course.description}</p>
+
+
+
+              
+//             {/* IMAGES */}
+//             {course.images?.length > 0 && (
+//               <div className="mt-4">
+//                 <h4 className="font-semibold ml-3 mb-2">Images</h4>
+
+//                 <div className="grid grid-cols-3 ml-2 mb-2 gap-2">
+//                   {course.images.map((img, index) => (
+//                     <img
+//                       key={index}
+//                       src={img.url}
+//                       alt="Course media"
+//                       className="w-full h-24 ml-3 object-cover rounded cursor-pointer"
+//                       onClick={() => window.open(img.url, "_blank")}
+//                     />
+//                   ))}
+//                 </div>
+//               </div>
+//             )}
+
+//             {/* PDFs */}
+//             {course.pdfs?.length > 0 && (
+//               <div className="mt-4">
+//                 <h4 className="font-semibold ml-3 mt-3 mb-2">PDFs</h4>
+//                 <ul className="space-y-1 mb-2">
+//                   {course.pdfs.map((pdf, index) => (
+//                     <li key={index}>
+//                       <a
+//                         href={pdf.url}
+//                         target="_blank"
+//                         className="text-indigo-700 ml-7 mb-2 underline"
+//                       >
+//                         {pdf.name || "PDF"}
+//                       </a>
+//                     </li>
+//                   ))}
+//                 </ul>
+//               </div>
+//             )}
+
+//           </div>
+//         ))}
+//       </div>
+//     </div>
+//   );
+// }
+
+ 
+
+
+
 // src/components/pages/Course.jsx
 import { useEffect, useState } from "react";
-import { collection, onSnapshot } from "firebase/firestore";
-import { doc, getDoc } from "firebase/firestore";
-
-
+import { collection, onSnapshot, doc, getDoc } from "firebase/firestore";
 import { auth, db } from "../../firebase";
 import { ThreeDot } from "react-loading-indicators";
 
 export default function Course() {
   const [courses, setCourses] = useState([]);
-
-  useEffect(() => {
-    const unsub = onSnapshot(collection(db, "courses"), (snapshot) => {
-      const list = snapshot.docs.map((doc) => ({
-        id: doc.id,
-        ...doc.data(),
-      }));
-
-      setCourses(list);
-    });
-
-    return () => unsub();
-  }, []);
-
-
-
   const [student, setStudent] = useState(null);
   const [studentLoading, setStudentLoading] = useState(true);
-  
-  
-  // ✅ Load logged-in student
+
+  // 🔹 Load student data
   useEffect(() => {
-    const user = auth.currentUser;
+    const loadStudent = async () => {
+      const user = auth.currentUser;
 
-    if (!user) {
-      setStudent(null);
+      if (!user) {
+        setStudent(null);
+        setStudentLoading(false);
+        return;
+      }
+
+      const ref = doc(db, "students", user.uid);
+      const snap = await getDoc(ref);
+
+      if (snap.exists()) {
+        setStudent(snap.data());
+      } else {
+        setStudent({});
+      }
+
       setStudentLoading(false);
-      return;
-    }
+    };
 
-    setStudent(user); // no need to fetch dept/section now
-    setStudentLoading(false);
+    loadStudent();
   }, []);
 
-  // ✅ Load ALL courses (no filters)
+  // 🔹 Load courses
+  // useEffect(() => {
+  //   const unsub = onSnapshot(collection(db, "courses"), (snapshot) => {
+  //     const list = snapshot.docs.map((d) => ({
+  //       id: d.id,
+  //       ...d.data(),
+  //     }));
+  //     setCourses(list);
+  //   });
+
+  //   return () => unsub();
+  // }, []);
+
   useEffect(() => {
-    const unsub = onSnapshot(collection(db, "courses"), (snapshot) => {
-      const list = snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
-      setCourses(list);
-    });
+  if (!student) return;
 
-    return () => unsub();
-  }, []);
+  const unsub = onSnapshot(collection(db, "courses"), (snapshot) => {
+    const list = snapshot.docs
+      .map((d) => ({ id: d.id, ...d.data() }))
+      .filter(
+        (c) =>
+          c.department === student.department &&
+          c.year === student.year &&
+          c.section === student.section
+      );
 
+    setCourses(list);
+  });
 
-
-  useEffect(() => {
-  const loadStudent = async () => {
-    const user = auth.currentUser;
-
-    if (!user) {
-      setStudent(null);
-      setStudentLoading(false);
-      return;
-    }
-
-    // 🔥 Fetch student document from Firestore
-    const ref = doc(db, "students", user.uid);
-    const snap = await getDoc(ref);
-
-    if (snap.exists()) {
-      setStudent(snap.data());
-    } else {
-      console.warn("⚠ No student data found for user");
-      setStudent({});
-    }
-
-    setStudentLoading(false);
-  };
-
-  loadStudent();
-}, []);
+  return () => unsub();
+}, [student]);
 
 
-  // Loading state
+  // 🔄 Loading
   if (studentLoading) {
     return (
-      <p className="text-center p-6">
-        <ThreeDot
-          variant="pulsate"
-          color="#1f13a4"
-          size="large"
-          text="⏳ Loading"
-          textColor="#172d68"
-        />
-      </p>
+      <div className="p-6 flex justify-center">
+        <ThreeDot variant="pulsate" color="#1f13a4" size="large" />
+      </div>
     );
   }
 
-
   return (
     <div className="p-6">
-      
-       <div className="mb-6 bg-white shadow rounded-lg p-4">
-       <h2 className="text-xl pt-4 ml-3 font-bold">Hello {student.name} 👋</h2>
-          <p className="text-gray-600 ml-3 mt-2">
-            Dept: <strong className="mr-6 ">{student.department}</strong> | Year: <strong className="mr-6 ">{student.year}</strong> | Section: <strong className="mr-3 ">{student.section}</strong>
-          </p>
-          <p className="text-gray-500 mt-3 pb-4 ml-3">
-            Class Adviser: <strong>A.XAVIER MARY</strong>
-          </p>
-           <p className="text-gray-600 ml-3 mt-2">
-           Welcome to your course materials 📚
-         </p>
-       </div>
 
-        {/* <h3 className="text-2xl font-semibold mb-4">Available Materials 📚</h3> */}
-        <h2 className="text-2xl font-bold mb-4">Available Materials 📚</h2>
+      {/* STUDENT HEADER */}
+      <div className="mb-6 bg-white shadow rounded-lg p-4">
+        <h2 className="text-xl font-bold">Hello {student?.name} 👋</h2>
+        {/* <p className="text-gray-600 mt-2">
+          Dept: <strong>{student?.department}</strong> | Year:{" "}
+          <strong>{student?.year}</strong> | Section:{" "}
+          <strong>{student?.section}</strong>
+        </p> */}
+         <p className="text-gray-600 mt-2">
+          Dept: <strong>CSE</strong> | Year:{" "}
+          <strong>2024</strong> | Section:{" "}
+          <strong>B</strong>
+        </p>
+        <p className="text-gray-500 mt-2">
+          Welcome to your course materials 📚
+        </p>
+      </div>
+
+      <h2 className="text-2xl font-bold mb-4">Available Materials 📚</h2>
 
       {courses.length === 0 && (
-        <p className="text-gray-400 text-xl">No materials 📚 available</p>
+        <p className="text-gray-400">No materials available</p>
       )}
 
-      <div className="grid md:grid-cols-2 gap-6">
+      {/* COURSES */}
+      <div className="space-y-8">
         {courses.map((course) => (
-          <div key={course.id} className="bg-white p-4 rounded-xl shadow-md">
+          <div key={course.id} className="bg-white p-5 rounded-xl shadow">
 
-            <h3 className="text-xl font-bold mt-1 ml-3">{course.name}</h3>
-            <p className="text-gray-700 ml-8">{course.description}</p>
+            <h3 className="text-xl font-bold mb-1">{course.name}</h3>
+            <p className="text-gray-600 mb-4">{course.description}</p>
 
-            {/* IMAGES */}
-            {course.images?.length > 0 && (
-              <div className="mt-4">
-                <h4 className="font-semibold ml-3 mb-2">Images</h4>
+            {/* SUBJECT WISE DISPLAY */}
+            {/* {course.subjects &&
+              Object.entries(course.subjects).map(
+                ([subjectName, data]) => ( */}
+                {course.subjects &&
+  Object.entries(course.subjects)
+    .filter(
+      ([, data]) =>
+        (data.images && data.images.length > 0) ||
+        (data.pdfs && data.pdfs.length > 0)
+    )
+    .map(([subjectName, data]) => (
 
-                <div className="grid grid-cols-3 ml-2 mb-2 gap-2">
-                  {course.images.map((img, index) => (
-                    <img
-                      key={index}
-                      src={img.url}
-                      alt="Course media"
-                      className="w-full h-24 ml-3 object-cover rounded cursor-pointer"
-                      onClick={() => window.open(img.url, "_blank")}
-                    />
-                  ))}
-                </div>
-              </div>
-            )}
+                  <div key={subjectName} className="mb-6">
 
-            {/* PDFs */}
-            {course.pdfs?.length > 0 && (
-              <div className="mt-4">
-                <h4 className="font-semibold ml-3 mt-3 mb-2">PDFs</h4>
-                <ul className="space-y-1 mb-2">
-                  {course.pdfs.map((pdf, index) => (
-                    <li key={index}>
-                      <a
-                        href={pdf.url}
-                        target="_blank"
-                        className="text-indigo-700 ml-7 mb-2 underline"
-                      >
-                        {pdf.name || "PDF"}
-                      </a>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            )}
+                    <h4 className="text-lg font-semibold text-indigo-700 mb-2">
+                      📘 {subjectName}
+                    </h4>
 
+                    {/* IMAGES */}
+                    {data.images?.length > 0 && (
+                      <div className="grid grid-cols-3 gap-2 mb-3">
+                        {data.images.map((img, i) => (
+                          <img
+                            key={i}
+                            src={img.url}
+                            alt=""
+                            className="h-24 w-full object-cover rounded cursor-pointer"
+                            onClick={() => window.open(img.url, "_blank")}
+                          />
+                        ))}
+                      </div>
+                    )}
+
+                    {/* PDFs */}
+                    {data.pdfs?.length > 0 && (
+                      <ul className="space-y-1">
+                        {data.pdfs.map((pdf, i) => (
+                          <li key={i}>
+                            <a
+                              href={pdf.url}
+                              target="_blank"
+                              rel="noreferrer"
+                              className="text-indigo-600 underline"
+                            >
+                              📄 {pdf.name}
+                            </a>
+                          </li>
+                        ))}
+                      </ul>
+                    )}
+                  </div>
+                )
+              )}
           </div>
         ))}
       </div>
