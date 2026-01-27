@@ -1,0 +1,7 @@
+
+[build]
+  publish = "build"  # React frontend build folder
+  functions = "netlify/functions"
+
+[dev]
+  functions = "netlify/functions"
