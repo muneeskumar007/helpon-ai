@@ -63,6 +63,16 @@ export async function handler(event) {
       return { statusCode: 405, body: "Method Not Allowed" };
     }
 
+    const SECRET = process.env.DELETE_SECRET;
+
+if (req.headers["x-delete-token"] !== SECRET) {
+  return {
+    statusCode: 401,
+    body: JSON.stringify({ error: "Unauthorized" }),
+  };
+}
+
+
     const { public_id, type = "image" } = JSON.parse(event.body);
 
     console.log("DELETE REQUEST:", public_id, type);

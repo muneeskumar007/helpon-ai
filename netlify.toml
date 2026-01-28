@@ -1,6 +1,6 @@
-
 [build]
-  publish = "build"  # React frontend build folder
+  command = "npm run build"
+  publish = "dist"
   functions = "netlify/functions"
 
 [dev]
