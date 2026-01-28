@@ -701,6 +701,29 @@ export default function Course() {
     loadStudent();
   }, []);
 
+
+
+  useEffect(() => {
+  if (!student) return;
+
+  const q = query(
+    collection(db, "courses"),
+    where("department", "==", student.department),
+    where("section", "==", student.section),
+    where("year", "==", student.year)
+  );
+
+  const unsub = onSnapshot(q, (snapshot) => {
+    const list = snapshot.docs.map((d) => ({
+      id: d.id,
+      ...d.data(),
+    }));
+    setCourses(list);
+  });
+
+  return () => unsub();
+}, [student]);
+
   // 🔹 Load courses
   // useEffect(() => {
   //   const unsub = onSnapshot(collection(db, "courses"), (snapshot) => {
@@ -782,7 +805,7 @@ export default function Course() {
             {/* {course.subjects &&
               Object.entries(course.subjects).map(
                 ([subjectName, data]) => ( */}
-                {course.subjects &&
+                {/* {course.subjects &&
   Object.entries(course.subjects)
     .filter(
       ([, data]) =>
@@ -795,10 +818,10 @@ export default function Course() {
 
                     <h4 className="text-lg font-semibold text-indigo-700 mb-2">
                       📘 {subjectName}
-                    </h4>
+                    </h4> */}
 
                     {/* IMAGES */}
-                    {data.images?.length > 0 && (
+                    {/* {data.images?.length > 0 && (
                       <div className="grid grid-cols-3 gap-2 mb-3">
                         {data.images.map((img, i) => (
                           <img
@@ -810,10 +833,10 @@ export default function Course() {
                           />
                         ))}
                       </div>
-                    )}
+                    )} */}
 
                     {/* PDFs */}
-                    {data.pdfs?.length > 0 && (
+                    {/* {data.pdfs?.length > 0 && (
                       <ul className="space-y-1">
                         {data.pdfs.map((pdf, i) => (
                           <li key={i}>
@@ -828,10 +851,63 @@ export default function Course() {
                           </li>
                         ))}
                       </ul>
-                    )}
-                  </div>
+                    )} */}
+                  {/* </div>
                 )
-              )}
+              )} */}
+
+
+
+
+
+
+
+{course.subjects &&
+  Object.entries(course.subjects).map(([subjectName, data]) => (
+    <div key={subjectName} className="mb-6">
+
+      <h4 className="text-lg font-semibold text-indigo-700 mb-2">
+        📘 {subjectName}
+      </h4>
+
+      {/* Images */}
+      {data.images?.length > 0 && (
+        <div className="grid grid-cols-3 gap-2 mb-3">
+          {data.images.map((img, i) => (
+            <img
+              key={i}
+              src={img.url}
+              alt={img.name}
+              className="h-24 w-full object-cover rounded cursor-pointer"
+              onClick={() => window.open(img.url, "_blank")}
+            />
+          ))}
+        </div>
+      )}
+
+      {/* PDFs */}
+      {data.pdfs?.length > 0 && (
+        <ul className="space-y-1">
+          {data.pdfs.map((pdf, i) => (
+            <li key={i}>
+              <a
+                href={pdf.url}
+                target="_blank"
+                rel="noreferrer"
+                className="text-indigo-600 underline"
+              >
+                📄 {pdf.name}
+              </a>
+            </li>
+          ))}
+        </ul>
+      )}
+    </div>
+  ))}
+
+
+
+              
           </div>
         ))}
       </div>
