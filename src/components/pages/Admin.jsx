@@ -1480,7 +1480,7 @@ export default function Admin() {
     }
     return uploaded;
   };
-  
+
 const subjectData = {
   images: newImages,
   pdfs: newPdfs,
@@ -1654,6 +1654,94 @@ const subjectData = {
 //   }
 // };
 
+// const handleSubmit = async (e) => {
+//   e.preventDefault();
+
+//   if (!form.subject) {
+//     alert("Please select a subject");
+//     return;
+//   }
+
+//   try {
+//     let uploadedImages = [];
+//     let uploadedPdfs = [];
+
+//     // 🔹 Upload images
+//     if (form.imageFiles?.length > 0) {
+//       uploadedImages = await uploadFiles(form.imageFiles, "image");
+//     }
+
+//     // 🔹 Upload PDFs
+//     if (form.pdfFiles?.length > 0) {
+//       uploadedPdfs = await uploadFiles(form.pdfFiles, "pdf");
+//     }
+
+//     const department = form.department || staffInfo?.department || "";
+//     const section = form.section || staffInfo?.section || "";
+//     const year = form.year || "";
+
+//     // 🔥 IMPORTANT: subject-wise merge
+//     const existingSubjects = editId ? form.subjects || {} : {};
+
+//     const updatedSubjects = {
+//       ...existingSubjects,
+//       [form.subject]: {
+//         images: [
+//           ...(existingSubjects?.[form.subject]?.images || []),
+//           ...uploadedImages,
+//         ],
+//         pdfs: [
+//           ...(existingSubjects?.[form.subject]?.pdfs || []),
+//           ...uploadedPdfs,
+//         ],
+//       },
+//     };
+
+//     const courseData = {
+//       name: form.name,
+//       description: form.description,
+//       year,
+//       department,
+//       section,
+//       adviser: form.adviser,
+//       subjects: updatedSubjects,
+//       updatedAt: new Date(),
+//       createdBy: staffInfo?.name || "Admin",
+//     };
+
+//     if (editId) {
+//       await updateDoc(doc(db, "courses", editId), courseData);
+//     } else {
+//       await addDoc(collection(db, "courses"), {
+//         ...courseData,
+//         createdAt: new Date(),
+//       });
+//     }
+
+//     alert("Course saved successfully!");
+
+//     setEditId(null);
+//     setForm({
+//       name: "",
+//       description: "",
+//       year: "",
+//       department: staffInfo?.department || "",
+//       section: staffInfo?.section || "",
+//       adviser: "",
+//       subject: "",
+//       subjects: {},
+//       imageFiles: [],
+//       pdfFiles: [],
+//     });
+
+//     fetchCourses();
+//   } catch (err) {
+//     console.error("Save failed:", err);
+//     alert("Save failed. Check console.");
+//   }
+// };
+
+
 const handleSubmit = async (e) => {
   e.preventDefault();
 
@@ -1663,38 +1751,27 @@ const handleSubmit = async (e) => {
   }
 
   try {
-    let uploadedImages = [];
-    let uploadedPdfs = [];
+    let newImages = [];
+    let newPdfs = [];
 
-    // 🔹 Upload images
+    // 🔹 upload images
     if (form.imageFiles?.length > 0) {
-      uploadedImages = await uploadFiles(form.imageFiles, "image");
+      newImages = await uploadFiles(form.imageFiles, "image");
     }
 
-    // 🔹 Upload PDFs
+    // 🔹 upload pdfs
     if (form.pdfFiles?.length > 0) {
-      uploadedPdfs = await uploadFiles(form.pdfFiles, "pdf");
+      newPdfs = await uploadFiles(form.pdfFiles, "pdf");
     }
 
-    const department = form.department || staffInfo?.department || "";
-    const section = form.section || staffInfo?.section || "";
-    const year = form.year || "";
+    const department = form.department || staffInfo?.department || "CSE";
+    const section = form.section || staffInfo?.section || "B";
+    const year = form.year || "2ND YEAR";
 
-    // 🔥 IMPORTANT: subject-wise merge
-    const existingSubjects = editId ? form.subjects || {} : {};
-
-    const updatedSubjects = {
-      ...existingSubjects,
-      [form.subject]: {
-        images: [
-          ...(existingSubjects?.[form.subject]?.images || []),
-          ...uploadedImages,
-        ],
-        pdfs: [
-          ...(existingSubjects?.[form.subject]?.pdfs || []),
-          ...uploadedPdfs,
-        ],
-      },
+    // ✅ SUBJECT DATA MUST BE CREATED HERE
+    const subjectData = {
+      images: newImages,
+      pdfs: newPdfs,
     };
 
     const courseData = {
@@ -1704,9 +1781,15 @@ const handleSubmit = async (e) => {
       department,
       section,
       adviser: form.adviser,
-      subjects: updatedSubjects,
+      createdBy: staffInfo?.name || "Unknown",
+
+      // ✅ subject-wise storage
+      subjects: {
+        ...(editId ? form.subjects || {} : {}),
+        [form.subject]: subjectData,
+      },
+
       updatedAt: new Date(),
-      createdBy: staffInfo?.name || "Admin",
     };
 
     if (editId) {
@@ -1737,9 +1820,10 @@ const handleSubmit = async (e) => {
     fetchCourses();
   } catch (err) {
     console.error("Save failed:", err);
-    alert("Save failed. Check console.");
+    alert("Failed to save course. See console.");
   }
 };
+
 
 
   const handleEdit = (course) => {
