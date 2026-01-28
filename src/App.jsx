@@ -21,7 +21,7 @@ export default function App() {
       {/* ✅ fixed login route */}
       <Route
         path="/login"
-        element={!user ? <Login /> : <Navigate to="/dashboard" replace />}
+        element={!user ? <Login /> : <Navigate to="/dashboard/course" replace />}
       />
 
       <Route

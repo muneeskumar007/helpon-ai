@@ -21,6 +21,8 @@ function Dashboard() {
         <Route path="/chat" element={<Chat />} />
         <Route path="/admin" element={<Admin /> } />
         <Route path="/profile" element={<Profile />} />
+        <Route index element={<Navigate to="course" replace />} />
+
         
       </Routes>
     </SidebarLayout>
