@@ -257,14 +257,16 @@ const saveStudentIfNotExists = async (user) => {
           // </button>
           <div className="relative mt-4">
   {/* 🔒 Coming Soon Tag */}
-  <div className="absolute -top-3 left-1/2 z-10 -translate-x-1/2 rounded-full bg-black px-3 py-1 text-xs font-semibold text-white shadow-lg">
+  <div className="absolute -top-3 left-1/2 z-10 -translate-x-1/2 rounded-full bg-gray-800 px-3 py-1 text-xs font-semibold text-white shadow-lg">
     🔒 Coming Soon
   </div>
 
   {/* Blurred Google Button */}
   <button
     disabled
-    className="flex w-full items-center justify-center rounded-lg border py-2 opacity-70 blur-[1.5px] cursor-not-allowed"
+   
+    className="flex w-full items-center justify-center rounded-lg border py-2 opacity-70 blur-[1.5px] cursor-not-allowed hover:shadow-lg transition"
+
   >
     <img
       src="https://www.svgrepo.com/show/355037/google.svg"
