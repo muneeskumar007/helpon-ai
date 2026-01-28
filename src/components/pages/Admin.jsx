@@ -1481,10 +1481,6 @@ export default function Admin() {
     return uploaded;
   };
 
-const subjectData = {
-  images: newImages,
-  pdfs: newPdfs,
-};
 
 
 
