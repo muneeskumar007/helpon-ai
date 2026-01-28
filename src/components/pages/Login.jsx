@@ -255,7 +255,7 @@ const saveStudentIfNotExists = async (user) => {
           //   />
           //   Continue with Google
           // </button>
-          <div className="relative mt-12">
+          <div className="relative mt-17">
   {/* 🔒 Coming Soon Tag */}
   <div className="absolute -top-3 left-1/2 z-10 -translate-x-1/2 rounded-full bg-gray-800 px-3 py-1 text-xs font-semibold text-white shadow-lg">
     🔒 Coming Soon
@@ -265,7 +265,7 @@ const saveStudentIfNotExists = async (user) => {
   <button
     disabled
    
-    className="flex w-full items-center justify-center rounded-lg border py-2 opacity-70 blur-[1.5px] cursor-not-allowed hover:shadow-lg transition"
+    className="flex w-full items-center justify-center rounded-lg border py-2 opacity-70 blur-[0.6px] cursor-not-allowed hover:shadow-lg transition"
 
   >
     <img
