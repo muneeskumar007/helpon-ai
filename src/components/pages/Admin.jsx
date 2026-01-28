@@ -1480,16 +1480,12 @@ export default function Admin() {
     }
     return uploaded;
   };
-
-//   // ❗ REQUIRED: define subjectData
-// const subjectData = {
-//   images: newImages,
-//   pdfs: newPdfs,
-// };
+  
 const subjectData = {
-  images: form.imageFiles || [],
-  pdfs: form.pdfFiles || [],
+  images: newImages,
+  pdfs: newPdfs,
 };
+
 
 
 //   // add or update course

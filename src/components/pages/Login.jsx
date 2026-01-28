@@ -13,6 +13,9 @@ import {
 import { doc, setDoc, getDoc } from "firebase/firestore";
 import { auth, db } from "../../firebase";
 
+
+
+
 import LightRays from "../../Backgrounds/LightRays/LightRays";
 import "../../App.css";
 import "./Login.css";
@@ -108,11 +111,13 @@ const saveStudent = async (user, extraName = null) => {
     } catch (err) {
       setError(err.message);
     }
-    await saveStudentIfNotExists(user);
+    
+    await signInWithPopup(auth, provider);
+await saveStudentIfNotExists(auth.currentUser);
+    navigate("/dashboard/course/");
 
   };
-
-  const saveStudentIfNotExists = async (user) => {
+const saveStudentIfNotExists = async (user) => {
   const ref = doc(db, "students", user.uid);
   const snap = await getDoc(ref);
 
@@ -123,11 +128,12 @@ const saveStudent = async (user, extraName = null) => {
       department: "",
       year: "",
       section: "",
-      role: "student",
+      adviser: "",
       createdAt: new Date(),
     });
   }
 };
+
 
 // 
 
