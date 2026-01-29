@@ -96,43 +96,109 @@ console.log("Gemini key:", import.meta.env.VITE_GEMINI_API_KEY);
 
 
 
-const API_KEY = import.meta.env.VITE_GEMINI_API_KEY;
+// const API_KEY = import.meta.env.VITE_GEMINI_API_KEY;
+
+// export async function generateGeminiReply(prompt) {
+//   if (!API_KEY) {
+//     return "⚠️ AI service not configured.";
+//   }
+
+//   try {
+//     const res = await fetch(
+//       `https://generativelanguage.googleapis.com/v1/models/gemini-1.5-flash:generateContent?key=${API_KEY}`,
+//       {
+//         method: "POST",
+//         headers: { "Content-Type": "application/json" },
+//         body: JSON.stringify({
+//           contents: [
+//             {
+//               role: "user",
+//               parts: [{ text: prompt }],
+//             },
+//           ],
+//         }),
+//       }
+//     );
+
+//     const data = await res.json();
+
+//     if (!res.ok) {
+//       console.error("❌ Gemini error:", data);
+//       throw new Error("Gemini API failed");
+//     }
+
+//     return (
+//       data?.candidates?.[0]?.content?.parts?.[0]?.text ||
+//       "🤖 No response generated."
+//     );
+//   } catch (err) {
+//     console.error("❌ Gemini exception:", err);
+//     return "⚠️ AI service temporarily unavailable.";
+//   }
+// }
+
+
+
+// const API_KEY = import.meta.env.VITE_GEMINI_API_KEY;
+
+// export async function generateGeminiReply(prompt) {
+//   try {
+//     const res = await fetch(
+//       `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-latest:generateContent?key=${API_KEY}`,
+//       {
+//         method: "POST",
+//         headers: {
+//           "Content-Type": "application/json",
+//         },
+//         body: JSON.stringify({
+//           contents: [
+//             {
+//               parts: [{ text: prompt }],
+//             },
+//           ],
+//         }),
+//       }
+//     );
+
+//     const data = await res.json();
+
+//     if (!res.ok) {
+//       console.error("❌ Gemini error:", data);
+//       throw new Error("Gemini API failed");
+//     }
+
+//     return (
+//       data?.candidates?.[0]?.content?.parts?.[0]?.text ||
+//       "🤖 No response generated."
+//     );
+//   } catch (err) {
+//     console.error("❌ Gemini exception:", err);
+//     return "⚠️ AI service temporarily unavailable.";
+//   }
+// }
+
+
+
+
+
+
+import { GoogleGenerativeAI } from "@google/generative-ai";
+
+const genAI = new GoogleGenerativeAI(
+  import.meta.env.VITE_GEMINI_API_KEY
+);
 
 export async function generateGeminiReply(prompt) {
-  if (!API_KEY) {
-    return "⚠️ AI service not configured.";
-  }
-
   try {
-    const res = await fetch(
-      `https://generativelanguage.googleapis.com/v1/models/gemini-1.5-flash:generateContent?key=${API_KEY}`,
-      {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          contents: [
-            {
-              role: "user",
-              parts: [{ text: prompt }],
-            },
-          ],
-        }),
-      }
-    );
+    const model = genAI.getGenerativeModel({
+      model: "gemini-1.5-flash",
+    });
 
-    const data = await res.json();
-
-    if (!res.ok) {
-      console.error("❌ Gemini error:", data);
-      throw new Error("Gemini API failed");
-    }
-
-    return (
-      data?.candidates?.[0]?.content?.parts?.[0]?.text ||
-      "🤖 No response generated."
-    );
+    const result = await model.generateContent(prompt);
+    const response = await result.response;
+    return response.text();
   } catch (err) {
-    console.error("❌ Gemini exception:", err);
+    console.error("❌ Gemini SDK error:", err);
     return "⚠️ AI service temporarily unavailable.";
   }
 }
