@@ -273,12 +273,12 @@ useEffect(() => {
                 📄 {pdf.name}
               </a>
               <button
-                className="text-red-600 text-xs"
+                className="  absolute top-1 right-1 bg-red-600 text-white text-xs px-2 py-1 rounded"
                 onClick={() =>
                   handleFileDelete(course.id, subject, pdf, "pdf")
                 }
               >
-                Delete
+                 👁️
               </button>
             </li>
           ))}
