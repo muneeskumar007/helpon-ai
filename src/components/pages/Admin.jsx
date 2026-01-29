@@ -1300,16 +1300,22 @@
 
 // src/components/pages/Admin.jsx
 import { useEffect, useState } from "react";
+;
 import {
   collection,
+  query,
+  where,
+  
   addDoc,
-  getDocs,
   updateDoc,
   deleteDoc,
   doc,
-  query,
-  where,
+  getDoc,
+  getDocs
 } from "firebase/firestore";
+
+
+
 import { db } from "../../firebase";
 import "./Admin.css";
 import LightRays from "../../Backgrounds/LightRays/LightRays";

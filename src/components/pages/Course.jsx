@@ -666,7 +666,17 @@
 
 // src/components/pages/Course.jsx
 import { useEffect, useState } from "react";
-import { collection, onSnapshot, doc, getDoc } from "firebase/firestore";
+
+import {
+  collection,
+  query,
+  where,
+  onSnapshot,
+  
+  doc,
+  getDoc
+} from "firebase/firestore";
+
 import { auth, db } from "../../firebase";
 import { ThreeDot } from "react-loading-indicators";
 
