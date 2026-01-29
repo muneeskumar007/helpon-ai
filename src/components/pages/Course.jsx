@@ -163,7 +163,9 @@ useEffect(() => {
         <p className="text-gray-600 mt-2 ml-3">
           Dept: <strong>{student?.department}</strong> | Year:{" "}
           <strong>{student?.year}</strong> | Section:{" "}
-          <strong>{student?.section}</strong>
+          <strong>{student?.section}</strong>{"  "}
+           | Class Advisor:{"  "}
+          <strong>A.Xavier mary</strong>
         </p>
          
         <p className="text-gray-500 mt-2 ml-3">
