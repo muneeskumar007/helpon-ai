@@ -29,8 +29,6 @@ const knowledgeBase = {
 };
 
 
-asy
-
 
 
 
