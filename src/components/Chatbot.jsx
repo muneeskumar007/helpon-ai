@@ -10,7 +10,10 @@ import {
 } from "firebase/firestore";
 import { auth, db } from "../firebase";  
 
-import { generateGeminiReply } from "../geminiApi"; // Adjust path as needed
+
+
+
+
 import './pages/Admin.css';
 
 
@@ -24,6 +27,9 @@ const knowledgeBase = {
   "profile": "👤 Manage your profile from the Profile page.",
   "help": "💡 Ask me about login, courses, upload, or search."
 };
+
+
+asy
 
 
 
@@ -78,7 +84,9 @@ export default function Chatbot() {
       const kbReply = getBotReply(input);
       if (kbReply.startsWith("🤔")) {
         // Not found in KB, use Gemini
-        reply = await generateGeminiReply(input);
+        
+        reply = await fetchGeminiReply(input);
+
         // Fallback if Gemini returns nothing
         if (!reply) reply = "Sorry, I couldn't generate a response.";
       } else {
@@ -103,8 +111,24 @@ catch (err) {
   };
 
 
+async function fetchGeminiReply(message) {
+  const res = await fetch("/.netlify/functions/gemini", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ prompt: message }),
+  });
+
+  const data = await res.json();
+  return data.reply || "⚠️ AI service unavailable";
+}
 
 
+
+
+
+  
   
 
   if (!userId) {

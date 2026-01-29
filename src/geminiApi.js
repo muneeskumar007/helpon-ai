@@ -182,6 +182,30 @@ console.log("Gemini key:", import.meta.env.VITE_GEMINI_API_KEY);
 
 
 
+// import { GoogleGenerativeAI } from "@google/generative-ai";
+
+// const genAI = new GoogleGenerativeAI(
+//   import.meta.env.VITE_GEMINI_API_KEY
+// );
+
+// export async function generateGeminiReply(prompt) {
+//   try {
+//     const model = genAI.getGenerativeModel({
+//       model: "gemini-1.5-flash",
+//     });
+
+//     const result = await model.generateContent(prompt);
+//     const response = await result.response;
+//     return response.text();
+//   } catch (err) {
+//     console.error("❌ Gemini SDK error:", err);
+//     return "⚠️ AI service temporarily unavailable.";
+//   }
+// }
+
+
+
+
 import { GoogleGenerativeAI } from "@google/generative-ai";
 
 const genAI = new GoogleGenerativeAI(
@@ -191,14 +215,15 @@ const genAI = new GoogleGenerativeAI(
 export async function generateGeminiReply(prompt) {
   try {
     const model = genAI.getGenerativeModel({
-      model: "gemini-1.5-flash",
+      model: "gemini-pro", // ✅ CORRECT MODEL
     });
 
     const result = await model.generateContent(prompt);
     const response = await result.response;
+
     return response.text();
-  } catch (err) {
-    console.error("❌ Gemini SDK error:", err);
+  } catch (error) {
+    console.error("❌ Gemini SDK error:", error);
     return "⚠️ AI service temporarily unavailable.";
   }
 }
