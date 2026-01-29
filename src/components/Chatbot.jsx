@@ -14,6 +14,18 @@ import { generateGeminiReply } from "../geminiApi"; // Adjust path as needed
 import './pages/Admin.css';
 
 
+const knowledgeBase = {
+  "hi": "👋 Hi! How can I help you?",
+  "hello": "Hello 😊 How can I assist you?",
+  "login": "🔐 To login, click the Login button and sign in with Google or email.",
+  "signup": "📝 Use the Signup page to create a new account.",
+  "upload": "⬆️ Admins can upload courses and materials from the Admin panel.",
+  "courses": "📚 You can view available courses in the Courses section.",
+  "profile": "👤 Manage your profile from the Profile page.",
+  "help": "💡 Ask me about login, courses, upload, or search."
+};
+
+
 
 
 function getBotReply(message) {
