@@ -100,7 +100,7 @@ catch (err) {
   console.error("Chatbot error:", err);
   setMessages((prev) => [
     ...prev,
-    { sender: "bot", text: "⚠️ Error getting reply. Please contact Admin and try again." }
+    { sender: "bot", text: "⚠️ Error getting reply. AI temporarily unavailable.AI Met an Accident, we will cure AI very soon  TEAM MK." }
   ]);
 }
 
