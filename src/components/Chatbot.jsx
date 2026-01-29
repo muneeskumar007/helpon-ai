@@ -109,17 +109,39 @@ catch (err) {
   };
 
 
+// async function fetchGeminiReply(message) {
+//   const res = await fetch("/.netlify/functions/gemini", {
+//     method: "POST",
+//     headers: {
+//       "Content-Type": "application/json",
+//     },
+//     body: JSON.stringify({ prompt: message }),
+//   });
+
+//   const data = await res.json();
+//   return data.reply || "⚠️ AI service unavailable";
+// }
+
+
 async function fetchGeminiReply(message) {
   const res = await fetch("/.netlify/functions/gemini", {
     method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
+    headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ prompt: message }),
   });
 
-  const data = await res.json();
-  return data.reply || "⚠️ AI service unavailable";
+  if (!res.ok) {
+    return "⚠️ AI service unavailable";
+  }
+
+  const text = await res.text();
+
+  try {
+    const data = JSON.parse(text);
+    return data.reply || "⚠️ No AI reply";
+  } catch {
+    return "⚠️ Server returned invalid response";
+  }
 }
 
 
