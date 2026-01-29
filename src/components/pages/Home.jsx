@@ -42,10 +42,12 @@ export default function Home() {
           <button onClick={() => navigate("/login")} className="px-6 py-3 bg-yellow-400 text-black font-semibold rounded-2xl shadow-lg hover:bg-yellow-300 transition">
             Get Started
           </button>
-          <button className="px-6 py-3 bg-transparent border border-yellow-300 text-yellow-300 rounded-2xl shadow-lg hover:bg-yellow-200 hover:text-black transition">
+          <button onClick={() => window.open("helponpdf.pdf", "_blank")} className="px-6 py-3 bg-transparent border border-yellow-300 text-yellow-300 rounded-2xl shadow-lg hover:bg-yellow-200 hover:text-black transition">
             Learn More
           </button>
           
+          
+
         </div>
           </AnimatedContent>
 

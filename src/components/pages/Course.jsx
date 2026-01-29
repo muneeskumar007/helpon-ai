@@ -251,7 +251,7 @@ useEffect(() => {
                   handleFileDelete(course.id, subject, img, "image")
                 }
               >
-                X
+                👁️
               </button>
             </div>
           ))}

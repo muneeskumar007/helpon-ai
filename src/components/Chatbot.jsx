@@ -8,52 +8,11 @@ import {
   onSnapshot,
   serverTimestamp,
 } from "firebase/firestore";
-import { auth, db } from "../firebase";   // ✅ import auth (🔥 added)
-
-// ... your knowledgeBase & getBotReply stay the same ...
-// api
+import { auth, db } from "../firebase";  
 
 import { generateGeminiReply } from "../geminiApi"; // Adjust path as needed
+import './pages/Admin.css';
 
-
-
-// const knowledgeBase = {
-//   // Greetings
-//   "hello": "👋 Hey! How can I help you today?",
-//   "hlo": "👋 Hey! How can I help you today?",
-//   "hi": "Hi there! 😊 What do you want to know?",
-//   "hey": "Hello 👋, need help with login or files?",
-//   "bye": "Goodbye! 👋 Have a wonderful day!",
-
-//   // Auth
-//   "login": "🔑 To login, use your email & password on the login page.",
-//   "signup": "📝 Go to Sign Up and provide email, password & name.",
-//   "logout": "🚪 Click the logout button in the top right to sign out.",
-//   "password reset": "🔒 Forgot your password? Use the reset option on login.",
-
-//   // Files & Upload
-//   "upload": "📤 Use Upload Manager in your dashboard to upload documents.",
-//   "view files": "📂 Open Home or Document Viewer to see uploaded files.",
-//   "delete file": "🗑️ In File List, click delete on the file you want removed.",
-//   "pdf": "📑 PDFs can be uploaded and previewed in the viewer.",
-//   "images": "🖼️ Supported formats: JPG, PNG, GIF. Upload via Upload Manager.",
-
-//   // Profile
-//   "profile": "👤 You can edit your profile in the Profile section.",
-//   "update details": "✏️ Go to Profile > Edit to update your details.",
-//   "change password": "🔐 From Profile settings, you can change your password.",
-
-//   // Search & Navigation
-//   "search": "🔍 Use the search bar to find your documents.",
-//   "back": "⬅️ Use the back arrow (top left) to return to the menu.",
-//   "home": "🏠 Home shows all categories & cards.",
-//   "dashboard": "📊 Dashboard gives you access to uploads, profile, and files.",
-
-//   // Support
-//   "help": "🤝 I can help with login, signup, upload, profile, or file viewing.",
-//   "contact": "📧 Reach out to support@example.com for extra help.",
-//   "error": "⚠️ If you see an error, refresh or try logging in again.",
-// };
 
 
 
@@ -138,50 +97,130 @@ export default function Chatbot() {
   }
 
   return (
-    <div className=" h-dvh overflow-hidden no-scrollbar flex flex-col  bg-gray-900 text-white">
-      {/* Header */}
-      {/* <div className="p-4 border-b border-gray-700 bg-gray-800 shadow-md">
-        <h2 className="text-lg font-semibold text-blue-400">💬 HelpBot</h2>
-      </div> */}
+   
+// {/* <div className="h-dvh w-full max-w-2xl mx-auto flex flex-col bg-white overflow-hidden">
 
-      {/* Messages */}
-      <div ref={listRef} className="flex-1 overflow-y-auto p-4 space-y-3 bg-gray-900">
-        {messages.map((m, idx) => (
-          <div
-            key={idx}
-            className={`flex ${m.sender === "user" ? "justify-end" : "justify-start"}`}
-          >
-            <span
-              className={`px-4 py-2 rounded-2xl shadow-md ${
-                m.sender === "user"
-                  ? "bg-blue-600 text-white rounded-br-none"
-                  : "bg-gray-700 text-gray-200 rounded-bl-none"
-              }`}
-            >
-              {m.text}
-            </span>
-          </div>
-        ))}
-      </div>
+//       <div
+//   ref={listRef}
+//   className="flex-1 overflow-y-auto overflow-x-hidden p-4 space-y-3"
+// >
 
-      {/* Input */}
-      <div className="p-3 border-t border-gray-700 bg-gray-800 flex">
-        <input
-          value={input}
-          onChange={(e) => setInput(e.target.value)}
-          className="flex-1 border border-gray-600 bg-gray-700 text-white p-3 rounded-l-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-          placeholder="Type a message..."
-          disabled={loading}
-          onKeyDown={(e) => { if (e.key === 'Enter') handleSend(); }}
-        />
-        <button
-          onClick={handleSend}
-          className="bg-blue-600 hover:bg-blue-700 text-white px-6 rounded-r-lg font-medium"
-          disabled={loading}
+//         {messages.map((m, idx) => (
+//           <div
+//             key={idx}
+//             className={`flex ${m.sender === "user" ? "justify-end" : "justify-start"}`}
+//           >
+           
+//             <span
+//   className={`max-w-[80%] break-words whitespace-pre-wrap px-4 py-2 rounded-2xl shadow-md ${
+//     m.sender === "user"
+//       ? "bg-blue-600 text-white rounded-br-none"
+//       : "bg-gray-700 text-gray-200 rounded-bl-none"
+//   }`}
+// >
+
+//               {m.text}
+//             </span>
+//           </div>
+//         ))}
+//       </div>
+
+//       {/* Input */}
+//       <div className="p-3 border-t border-gray-700 bg-gray-800 flex">
+//         <input
+//           value={input}
+//           onChange={(e) => setInput(e.target.value)}
+//           className="flex-1 border border-gray-600 bg-gray-700 text-white p-3 rounded-l-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+//           placeholder="Type a message..."
+//           disabled={loading}
+//           onKeyDown={(e) => { if (e.key === 'Enter') handleSend(); }}
+//         />
+//         <button
+//           onClick={handleSend}
+//           className="bg-blue-600 hover:bg-blue-700 text-white px-6 rounded-r-lg font-medium"
+//           disabled={loading}
+//         >
+//           {loading ? "..." : "Send"}
+//         </button>
+//       </div>
+//     </div> */}
+
+
+<div className="h-dvh w-full max-w-2xl mx-auto flex flex-col bg-gray-800 overflow-hidden">
+
+  {/* Messages container */}
+  <div
+    ref={listRef}
+    className="flex-1 overflow-y-auto overflow-x-hidden p-4 space-y-3 relative"
+    style={{ scrollBehavior: "smooth" }}
+    onScroll={(e) => {
+      const container = e.currentTarget;
+      if (container.scrollTop > 5) {
+        container.classList.add("scroll-shadow");
+      } else {
+        container.classList.remove("scroll-shadow");
+      }
+    }}
+  >
+    {messages.map((m, idx) => (
+      <div
+        key={idx}
+        className={`flex ${m.sender === "user" ? "justify-end" : "justify-start"}`}
+      >
+        <span
+          className={`max-w-[80%] break-words whitespace-pre-wrap px-4 py-2 rounded-2xl shadow-md ${
+            m.sender === "user"
+              ? "bg-blue-600 text-white rounded-br-none"
+              : "bg-gray-700 text-gray-200 rounded-bl-none"
+          }`}
         >
-          {loading ? "..." : "Send"}
-        </button>
+          {m.text}
+        </span>
       </div>
-    </div>
+    ))}
+  </div>
+
+  {/* Input bar - sticky to bottom */}
+  {/* <div className="sticky bottom-0 z-10 p-3 border-t border-gray-700 bg-gray-800 flex"> */}
+    < div className="flex p-3 bg-gray-800 border-t sticky bottom-0 z-10">
+    <input
+      value={input}
+      onChange={(e) => setInput(e.target.value)}
+      className="flex-1 border border-gray-600 bg-gray-700 text-white p-3 rounded-l-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+      placeholder="Type a message..."
+      disabled={loading}
+      onKeyDown={(e) => { if (e.key === 'Enter') handleSend(); }}
+    />
+    <button
+      onClick={handleSend}
+      className="bg-blue-600 hover:bg-blue-700 text-white px-6 rounded-r-lg font-medium"
+      disabled={loading}
+    >
+      {loading ? "..." : "Send"}
+    </button>
+  </div>
+
+
+  {/* Input bar sticky to bottom */}
+  {/* <form
+    onSubmit={sendMessage}
+    className="flex p-3 bg-gray-800 border-t sticky bottom-0 z-10"
+  >
+    <input
+      type="text"
+      value={newMsg}
+      onChange={(e) => setNewMsg(e.target.value)}
+      placeholder="Type your message..."
+      className="flex-1 border border-gray-600 bg-gray-700 text-white p-3 rounded-l-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+    />
+    <button
+      type="submit"
+      className="bg-blue-600 text-white px-4 rounded-r-lg hover:bg-blue-700 transition"
+    >
+      Send
+    </button>
+  </form> */}
+</div>
+
   );
 }

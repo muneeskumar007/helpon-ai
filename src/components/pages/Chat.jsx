@@ -11,6 +11,8 @@ import {
 } from "firebase/firestore";
 import { onAuthStateChanged } from "firebase/auth";
 import { db, auth } from "../../firebase";
+import './Admin.css';
+
 
 export default function Chat() {
   const [messages, setMessages] = useState([]);
@@ -143,61 +145,130 @@ const sectionKey = student?.department && student?.section
 
 
 
-  // const sectionKey = `${student.department}-${student.section}`;
-
   return (
-    <div className="max-w-2xl mx-auto p-4 bg-white shadow-lg rounded-2xl h-screen flex flex-col">
-      <h2 className="text-xl font-bold mb-4 text-center text-blue-700">
-        Section Chat – {sectionKey}
-      </h2>
+//     <div className="max-w-2xl mx-auto p-4 bg-white shadow-lg rounded-2xl h-screen flex flex-col">
+     
+//       <h2 className="text-xl font-bold text-center text-blue-700 p-4 border-b">
+//   Section Chat – {sectionKey}
+// </h2>
 
-      {/* Messages */}
-      <div className="flex-1 overflow-y-auto border p-3 rounded-lg bg-gray-50 space-y-3">
-        {messages.map((msg) => {
-          const isMine = msg.userId === anonId;
-          return (
-            <div
-              key={msg.id}
-              className={`flex flex-col  ${
-                isMine ? "items-end" : "items-start"
-              }`}
-            >
-              <span className="text-xs text-gray-500 mb-1">
-                {msg.userId} • {formatTime(msg.createdAt)}
-              </span>
-              <span
-                className={`px-3 py-2 rounded-lg max-w-[75%] break-words ${
-                  isMine
-                    ? "bg-blue-600 text-white rounded-br-none"
-                    : "bg-gray-200 text-gray-800 rounded-bl-none"
-                }`}
-              >
-                {msg.message}
-              </span>
-            </div>
-          );
-        })}
-        <div ref={bottomRef} /> {/* 🔹 Keeps scroll at bottom */}
-      </div>
 
-      {/* Input */}
-      <form onSubmit={sendMessage}   className="p-3  border-gray-700 bg-gray-800 flex">
-        <input
-          type="text"
-          value={newMsg}
-          onChange={(e) => setNewMsg(e.target.value)}
-          placeholder="Type your message..."
-           className="flex-1 border border-gray-600 bg-gray-700 text-white p-3 rounded-l-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+//       {/* Messages */}
+//         <div className="flex-1 overflow-y-auto overflow-x-hidden p-3 bg-gray-50 space-y-3">
+
+//         {messages.map((msg) => {
+//           const isMine = msg.userId === anonId;
+//           return (
+//             <div
+//               key={msg.id}
+//               className={`flex flex-col  ${
+//                 isMine ? "items-end" : "items-start"
+//               }`}
+//             >
+//               <span className="text-xs text-gray-500 mb-1">
+//                 {msg.userId} • {formatTime(msg.createdAt)}
+//               </span>
+             
+//               <span
+//   className={`px-3 py-2 rounded-lg max-w-[80%] break-words whitespace-pre-wrap ${
+//     isMine
+//       ? "bg-blue-600 text-white rounded-br-none"
+//       : "bg-gray-200 text-gray-800 rounded-bl-none"
+//   }`}
+// >
+
+//                 {msg.message}
+//               </span>
+//             </div>
+//           );
+//         })}
+//         <div ref={bottomRef} /> {/* 🔹 Keeps scroll at bottom */}
+//       </div>
+
+//        <form onSubmit={sendMessage} className="flex p-3 border-t bg-gray-800">
+
+//         <input
+//           type="text"
+//           value={newMsg}
+//           onChange={(e) => setNewMsg(e.target.value)}
+//           placeholder="Type your message..."
+//            className="flex-1 border border-gray-600 bg-gray-700 text-white p-3 rounded-l-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
          
-          // className="flex-1 border border-gray-300 rounded-l-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400"
-        />
-        <button
-          type="submit"
-          className="bg-blue-600 text-white px-4 rounded-r-lg hover:bg-blue-700 transition"
+//         />
+//         <button
+//           type="submit"
+//           className="bg-blue-600 text-white px-4 rounded-r-lg hover:bg-blue-700 transition"
+//         >
+//           Send
+//         </button>
+//       </form>
+//     </div>
+
+
+<div className="max-w-2xl mx-auto h-screen flex flex-col bg-white shadow-lg rounded-2xl">
+
+  <h2 className="text-xl font-bold text-center text-blue-700 p-4 border-b">
+    Section Chat – {sectionKey}
+  </h2>
+
+  {/* Messages container with smooth scroll & scroll shadow */}
+  <div
+    className="flex-1 overflow-y-auto p-3 bg-gray-50 space-y-3 relative"
+    onScroll={(e) => {
+      const container = e.currentTarget;
+      if (container.scrollTop > 5) {
+        container.classList.add("shadow-top");
+      } else {
+        container.classList.remove("shadow-top");
+      }
+    }}
+    style={{ scrollBehavior: "smooth" }}
+  >
+    {messages.map((msg) => {
+      const isMine = msg.userId === anonId;
+      return (
+        <div
+          key={msg.id}
+          className={`flex flex-col ${isMine ? "items-end" : "items-start"}`}
         >
-          Send
-        </button>
-      </form>
-    </div>
+          <span className="text-xs text-gray-500 mb-1">
+            {msg.userId} • {formatTime(msg.createdAt)}
+          </span>
+          <span
+            className={`px-3 py-2 rounded-lg max-w-[80%] break-words whitespace-pre-wrap ${
+              isMine
+                ? "bg-blue-600 text-white rounded-br-none"
+                : "bg-gray-200 text-gray-800 rounded-bl-none"
+            }`}
+          >
+            {msg.message}
+          </span>
+        </div>
+      );
+    })}
+    <div ref={bottomRef} /> {/* Auto-scroll */}
+  </div>
+
+  {/* Input bar sticky to bottom */}
+  <form
+    onSubmit={sendMessage}
+    className="flex p-3 bg-gray-800 border-t sticky bottom-0 z-10"
+  >
+    <input
+      type="text"
+      value={newMsg}
+      onChange={(e) => setNewMsg(e.target.value)}
+      placeholder="Type your message..."
+      className="flex-1 border border-gray-600 bg-gray-700 text-white p-3 rounded-l-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+    />
+    <button
+      type="submit"
+      className="bg-blue-600 text-white px-4 rounded-r-lg hover:bg-blue-700 transition"
+    >
+      Send
+    </button>
+  </form>
+</div>
+
   );
 }
