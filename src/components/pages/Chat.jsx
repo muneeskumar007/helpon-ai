@@ -207,7 +207,7 @@ const sectionKey = student?.department && student?.section
 
 <div className="max-w-2xl mx-auto h-screen flex flex-col bg-white shadow-lg rounded-2xl">
 
-  <h2 className="text-xl font-bold text-center text-blue-700 p-4 border-b">
+  <h2 className="text-xl font-bold text-center mt-5 text-blue-700 p-4 border-b">
     Section Chat – {sectionKey}
   </h2>
 
@@ -252,7 +252,7 @@ const sectionKey = student?.department && student?.section
   {/* Input bar sticky to bottom */}
   <form
     onSubmit={sendMessage}
-    className="flex p-3 bg-gray-800 border-t sticky bottom-0 z-10"
+    className="flex p-3 bg-gray-800 border-t  mb-12 sticky bottom-0 z-10"
   >
     <input
       type="text"
