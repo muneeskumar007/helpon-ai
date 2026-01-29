@@ -579,7 +579,7 @@ const handleFileDelete = async (courseId, subject, file, type) => {
         <h3 className="text-2xl font-bold mb-4 text-gray-200">Courses</h3>
         <div className="grid gap-4 md:grid-cols-2">
           {courses.map((course) => (
-            <div key={course.id} className="bg-white p-4 rounded-xl shadow-md">
+            <div key={course.id} className="bg-white p-4 rounded-xl mb-16 shadow-md">
               <h4 className="font-bold text-lg">{course.name}</h4>
               <p className="text-gray-600">{course.description}</p>
 
@@ -672,7 +672,7 @@ const handleFileDelete = async (courseId, subject, file, type) => {
                 alt="dev-screenshot"
                 className="w-full h-40 object-contain rounded"
               />
-              <p className="text-sm text-gray-500 mt-2">Local test image path (dev)</p>
+              <p className="text-sm text-gray-500 mt-2">Local test NO image uploaded (dev)</p>
             </div>
           )}
         </div>
